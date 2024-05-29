@@ -1,0 +1,39 @@
+﻿@page
+@model EmployeePerformanceApp.Pages.PerformanceReviewListingModel
+@{
+    ViewData["Title"] = "Performance Reviews";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="employeeId">Employee ID</label>
+        <input type="text" class="form-control" id="employeeId" name="EmployeeId" value="@Model.EmployeeId" />
+    </div>
+    <button type="submit" class="btn btn-primary">Get Reviews</button>
+</form>
+
+@if (Model.PerformanceReviews != null && Model.PerformanceReviews.Any())
+{
+    <h2>Performance Review Dates</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+            <th>Review Date</th>
+                <th>Score</th>
+                <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var review in Model.PerformanceReviews)
+            {
+                    <tr>
+                        <td>@review.review_date.ToShortDateString()</td>
+                        <td>@review.score</td>
+                        <td>@review.comments</td>
+                    </tr>
+            }
+            </tbody>
+        </table>
+}

@@ -1,0 +1,29 @@
+﻿@page
+@model EmployeePerformanceApp.Pages.UsersModel
+
+<h2>Employees</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Position</th>
+            <th>Login Name</th>
+            <th>Role</th>
+            <th>Hire Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model.EmployeeInfoList)
+        {
+            <tr>
+                <td>@employee.first_name</td>
+                <td>@employee.last_name</td>
+                <td>@employee.position</td>
+                <td>@employee.login_name</td>
+                <td>@employee.role_position</td>
+                <td>@employee.hire_date.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
