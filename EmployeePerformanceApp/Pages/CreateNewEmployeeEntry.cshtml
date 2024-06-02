@@ -1,0 +1,52 @@
+﻿@page
+@model EmployeePerformanceApp.Pages.CreateNewEmployeeEntryModel
+@{
+    ViewData["Title"] = "Create New Employee Entry";
+}
+
+<h1>Create New Entry</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" name="FirstName" value="@Model.FirstName" />
+
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" name="LastName" value="@Model.LastName" />
+
+        <label for="position">Position</label>
+        <input type="text" class="form-control" id="position" name="Position" value="@Model.Position" />
+
+        <label for="hireDate">Hire Date</label>
+        <input type="date" class="form-control" id="hireDate" name="HireDate" value="@Model.HireDate.ToString("yyyy-MM-dd")" />
+
+        <label for="departmentID">Department ID</label>
+        <select class="form-control" id="departmentID" name="DepartmentID">
+            <option value="1" selected="@Model.DepartmentID == 1">HR</option>
+            <option value="2" selected="@Model.DepartmentID == 2">Main Team A</option>
+            <option value="3" selected="@Model.DepartmentID == 3">Secondary Team B</option>
+            <option value="4" selected="@Model.DepartmentID == 4">Support Team</option>
+        </select>
+
+        <label for="loginName">Login Name</label>
+        <input type="text" class="form-control" id="loginName" name="LoginName" value="@Model.LoginName" />
+         
+        <label for="rolePosition">Role Position</label>
+        <select class="form-control" id="rolePosition" name="RolePosition">
+            <option value="Employee" selected="@Model.RolePosition == "Employee"">Employee</option>
+            <option value="Manager" selected="@Model.RolePosition == "Manager"">Manager</option>
+            <option value="HR" selected="@Model.RolePosition == "HR"">HR</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Add Employee</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success mt-3">@Model.SuccessMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger mt-3">@Model.ErrorMessage</div>
+}

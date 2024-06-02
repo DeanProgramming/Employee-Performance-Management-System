@@ -11,8 +11,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<EmployeePerformanceDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'EmployeePerformanceDbContext' not found.")));
 
-builder.Services.AddScoped<GetTop5EmployeesAverageScore>();
+builder.Services.AddScoped<AddNewEmployee>();
 builder.Services.AddScoped<GetEmployeeDueForReview>();
+builder.Services.AddScoped<GetTop5EmployeesAverageScore>();
+builder.Services.AddScoped<UpdateEmployeeDetails>();
 
 builder.Services.AddRazorPages();
 
