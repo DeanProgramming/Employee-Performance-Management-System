@@ -1,0 +1,76 @@
+﻿@page
+@model EmployeePerformanceApp.Pages.UpdateEmployeeInformationModel
+@{
+    ViewData["Title"] = "Update Employee Details";
+}
+
+<h1>Update Employee Details</h1>
+
+<form method="post" asp-page-handler="Search">
+    <div class="form-group">
+        <label for="searchTerm">Search by First Name, Last Name, or Position</label>
+        <input type="text" class="form-control" id="searchTerm" name="SearchTerm" value="@Model.SearchTerm" />
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+@if (Model.Employees != null && Model.Employees.Count > 0)
+{
+    <h2>Search Results</h2>
+    <ul>
+        @foreach (var employee in Model.Employees)
+        {
+            <li>
+                <form method="post" asp-page-handler="Select">
+                    <input type="hidden" name="EmployeeID" value="@employee.employee_id" />
+                    <button type="submit" class="btn btn-link">@employee.first_name @employee.last_name - @employee.position</button>
+                </form>
+            </li>
+        }
+    </ul>
+}
+@if (Model.EmployeeFound)
+{
+    <form method="post" asp-page-handler="Update">
+        <input type="hidden" asp-for="EmployeeID" />
+
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" name="FirstName" value="@Model.FirstName" />
+
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" name="LastName" value="@Model.LastName" />
+
+        <label for="position">Position</label>
+        <input type="text" class="form-control" id="position" name="Position" value="@Model.Position" />
+
+        <label for="hireDate">Hire Date</label>
+        <input type="date" class="form-control" id="hireDate" name="HireDate" value="@Model.HireDate.ToString("yyyy-MM-dd")" />
+
+        <label for="departmentID">Department ID</label>
+        <select class="form-control" id="departmentID" name="DepartmentID">
+            <option value="1" selected="@Model.DepartmentID == 1">HR</option>
+            <option value="2" selected="@Model.DepartmentID == 2">Main Team A</option>
+            <option value="3" selected="@Model.DepartmentID == 3">Secondary Team B</option>
+            <option value="4" selected="@Model.DepartmentID == 4">Support Team</option>
+        </select> 
+
+        <label for="rolePosition">Role Position</label>
+        <select class="form-control" id="rolePosition" name="RolePosition">
+            <option value="Employee" selected="@Model.RolePosition == " Employee"">Employee</option>
+            <option value="Manager" selected="@Model.RolePosition == " Manager"">Manager</option>
+            <option value="HR" selected="@Model.RolePosition == " HR"">HR</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Update Employee</button>
+    </form>
+}
+
+@if (!string.IsNullOrEmpty(Model.SuccessMessage))
+{
+    <div class="alert alert-success mt-3">@Model.SuccessMessage</div>
+}
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div class="alert alert-danger mt-3">@Model.ErrorMessage</div>
+}

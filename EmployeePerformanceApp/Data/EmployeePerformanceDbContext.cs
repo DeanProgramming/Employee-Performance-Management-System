@@ -13,6 +13,7 @@ namespace EmployeePerformanceApp.Data
 
         public DbSet<EmployeeInfo> EmployeeInfos { get; set; }
         public DbSet<PerformanceReviews> PerformanceReviews { get; set; }
+        public DbSet<EmployeeDepartments> EmployeeDepartments { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -28,6 +29,12 @@ namespace EmployeePerformanceApp.Data
             {
                 entity.ToTable("PerformanceReview", "Employee");
                 entity.HasKey(e => e.review_id);
+            });
+
+            modelBuilder.Entity<EmployeeDepartments>(entity =>
+            {
+                entity.ToTable("EmployeeDepartment", "Department");
+                entity.HasKey(e => e.connection_id);
             });
         }
 
@@ -46,7 +53,6 @@ namespace EmployeePerformanceApp.Data
             }
             catch (SqlException ex)
             {
-                // Handle exception (log it, rethrow it, or handle it as per your needs)
                 throw new InvalidOperationException($"Error executing stored procedure {procedureName}", ex);
             }
         }

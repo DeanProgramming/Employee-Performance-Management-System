@@ -1,6 +1,7 @@
 using EmployeePerformanceApp.StoredProcedures;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Threading.Tasks;
 
@@ -42,6 +43,14 @@ namespace EmployeePerformanceApp.Pages
         {
             if (!ModelState.IsValid)
             {
+                string missingItems = "";
+
+                missingItems = missingItems + (FirstName.IsNullOrEmpty() ? " Missing = Valid First Name ||" : "");
+                missingItems = missingItems + (LastName.IsNullOrEmpty() ? " Missing = Valid Last Name ||" : "");
+                missingItems = missingItems + (Position.IsNullOrEmpty() ? " Missing = Valid Position ||" : "");
+                missingItems = missingItems + (LoginName.IsNullOrEmpty() ? " Missing = Valid Login Name" : ""); 
+
+                ErrorMessage = $"An error occurred: {missingItems}";
                 return Page();
             }
 
@@ -52,6 +61,14 @@ namespace EmployeePerformanceApp.Pages
                 if (NewEmployeeID > 0)
                 {
                     SuccessMessage = $"Created a new user: {FirstName} {LastName}";
+
+                    FirstName = "";
+                    LastName = "";
+                    Position = "";
+                    HireDate = DateTime.Now;
+                    DepartmentID = 1;
+                    LoginName = "";
+                    RolePosition = "";
                 }
                 else
                 {

@@ -1,4 +1,5 @@
 ﻿using EmployeePerformanceApp.Data;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Threading.Tasks;
@@ -23,42 +24,19 @@ namespace EmployeePerformanceApp.StoredProcedures
                 command.CommandText = "UpdateEmployeeDetails";
                 command.CommandType = CommandType.StoredProcedure;
 
-                var employeeIdParam = command.CreateParameter();
-                employeeIdParam.ParameterName = "@EmployeeID";
-                employeeIdParam.Value = employeeId;
-                command.Parameters.Add(employeeIdParam);
-
-                var firstNameParam = command.CreateParameter();
-                firstNameParam.ParameterName = "@FirstName";
-                firstNameParam.Value = firstName;
-                command.Parameters.Add(firstNameParam);
-
-                var lastNameParam = command.CreateParameter();
-                lastNameParam.ParameterName = "@LastName";
-                lastNameParam.Value = lastName;
-                command.Parameters.Add(lastNameParam);
-
-                var positionParam = command.CreateParameter();
-                positionParam.ParameterName = "@Position";
-                positionParam.Value = position;
-                command.Parameters.Add(positionParam);
-
-                var hireDateParam = command.CreateParameter();
-                hireDateParam.ParameterName = "@HireDate";
-                hireDateParam.Value = hireDate;
-                command.Parameters.Add(hireDateParam);
-
-                var departmentIDParam = command.CreateParameter();
-                departmentIDParam.ParameterName = "@DepartmentID";
-                departmentIDParam.Value = departmentID;
-                command.Parameters.Add(departmentIDParam);
+                command.Parameters.Add(new SqlParameter("@EmployeeID", SqlDbType.Int) { Value = employeeId });
+                command.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.VarChar, 255) { Value = firstName });
+                command.Parameters.Add(new SqlParameter("@LastName", SqlDbType.VarChar, 255) { Value = lastName });
+                command.Parameters.Add(new SqlParameter("@Position", SqlDbType.VarChar, 255) { Value = position });
+                command.Parameters.Add(new SqlParameter("@HireDate", SqlDbType.Date) { Value = hireDate });
+                command.Parameters.Add(new SqlParameter("@DepartmentID", SqlDbType.Int) { Value = departmentID });
 
                 await _context.Database.OpenConnectionAsync();
 
                 try
                 {
                     var result = await command.ExecuteNonQueryAsync();
-                    isUpdated = result > 0;
+                    isUpdated = true;
                 }
                 catch (Exception ex)
                 {
