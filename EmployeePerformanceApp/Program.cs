@@ -1,5 +1,6 @@
 using EmployeePerformanceApp.Data;
 using EmployeePerformanceApp.StoredProcedures;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -10,6 +11,10 @@ builder.Services.AddRazorPages();
  
 builder.Services.AddDbContext<EmployeePerformanceDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'EmployeePerformanceDbContext' not found.")));
+
+builder.Services.AddDefaultIdentity<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<EmployeePerformanceDbContext>();
 
 builder.Services.AddScoped<AddNewEmployee>();
 builder.Services.AddScoped<GetEmployeeDueForReview>();
@@ -33,6 +38,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

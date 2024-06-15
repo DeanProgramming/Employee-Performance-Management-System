@@ -5,43 +5,66 @@ SET IDENTITY_INSERT Employee.EmployeeInfo ON;
 go
 
 CREATE PROCEDURE InsertEmployeeInfo
-	@EmployeeID INT,
+    @EmployeeID INT,
     @FirstName VARCHAR(255),
     @LastName VARCHAR(255),
     @Position VARCHAR(255),
     @HireDate DATE,
     @Login VARCHAR(255),
+    @Password VARCHAR(255),
     @Role VARCHAR(255)
 AS
 BEGIN
-    INSERT INTO Employee.EmployeeInfo (employee_id, first_name, last_name, position, login_name, role_position, hire_date)
-    VALUES (@EmployeeID, @FirstName, @LastName, @Position, @Login, @Role, @HireDate);
+    INSERT INTO Employee.EmployeeInfo (employee_id, first_name, last_name, position, login_name, passwords, role_position, hire_date)
+    VALUES (@EmployeeID, @FirstName, @LastName, @Position, @Login, @Password, @Role, @HireDate);
+
+    -- Insert user into AspNetUsers
+    INSERT INTO AspNetUsers (Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount)
+    VALUES (NEWID(), @Login, UPPER(@Login), @Login + '@example.com', UPPER(@Login + '@example.com'), 1, 
+            'AQAAAAIAAYagAAAAEC9LifLJYADjCODAqX2wGnmCnA1cACbMkhsEArIPy4ZXvRVG5fZCieOeU51wqjTohg==', 
+            NEWID(), NEWID(), 0, 0, 0, 0);
+
+    -- Insert user role into AspNetUserRoles
+    DECLARE @UserId NVARCHAR(450) = (SELECT Id FROM AspNetUsers WHERE UserName = @Login);
+    DECLARE @RoleId NVARCHAR(450) = (SELECT Id FROM AspNetRoles WHERE Name = @Role);
+
+    IF @RoleId IS NULL
+    BEGIN
+        -- Insert role into AspNetRoles if it doesn't exist
+        SET @RoleId = NEWID();
+        INSERT INTO AspNetRoles (Id, Name, NormalizedName, ConcurrencyStamp)
+        VALUES (@RoleId, @Role, UPPER(@Role), NEWID());
+    END
+
+    INSERT INTO AspNetUserRoles (UserId, RoleId)
+    VALUES (@UserId, @RoleId);
 END;
 go
  
--- TEAM A 
-EXEC InsertEmployeeInfo 1, 'John', 'Doe', 'Tech Lead', '2022-01-15', 'john.doe', 'Manager';
-EXEC InsertEmployeeInfo 2, 'Jane', 'Smith', 'Software Developer', '2022-03-22', 'jane.smith', 'Employee';
-EXEC InsertEmployeeInfo 3, 'Alice', 'Johnson', 'Software Developer', '2022-06-10', 'alice.johnson', 'Employee';
-EXEC InsertEmployeeInfo 4, 'Bob', 'Williams', 'Software Developer', '2022-08-05', 'bob.williams', 'Employee';
-EXEC InsertEmployeeInfo 5, 'Charlie', 'Brown', 'Software Developer', '2022-10-18', 'charlie.brown', 'Employee';
-EXEC InsertEmployeeInfo 6, 'David', 'Jones', 'Software Developer', '2023-02-14', 'david.jones', 'Employee';
-EXEC InsertEmployeeInfo 7, 'Eva', 'Miller', 'Software Developer', '2023-04-30', 'eva.miller', 'Employee';
-EXEC InsertEmployeeInfo 8, 'Frank', 'Davis', 'Software Developer', '2023-07-21', 'frank.davis', 'Employee';
+-- TEAM A  
+EXEC InsertEmployeeInfo 1, 'John', 'Doe', 'Tech Lead', '2022-01-15', 'john.doe', 'YourSecurePassword123!', 'Manager';
+EXEC InsertEmployeeInfo 2, 'Jane', 'Smith', 'Software Developer', '2022-03-22', 'jane.smith', 'YourSecurePassword123!', 'Employee';
+EXEC InsertEmployeeInfo 3, 'Alice', 'Johnson', 'Software Developer', '2022-06-10', 'alice.johnson', 'YourSecurePassword123!', 'Employee';
+EXEC InsertEmployeeInfo 4, 'Bob', 'Williams', 'Software Developer', '2022-08-05', 'bob.williams', 'YourSecurePassword123!', 'Employee';
+EXEC InsertEmployeeInfo 5, 'Charlie', 'Brown', 'Software Developer', '2022-10-18', 'charlie.brown', 'YourSecurePassword123!', 'Employee';
+EXEC InsertEmployeeInfo 6, 'David', 'Jones', 'Software Developer', '2023-02-14', 'david.jones', 'YourSecurePassword123!', 'Employee';
+EXEC InsertEmployeeInfo 7, 'Eva', 'Miller', 'Software Developer', '2023-04-30', 'eva.miller', 'YourSecurePassword123!', 'Employee';
+EXEC InsertEmployeeInfo 8, 'Frank', 'Davis', 'Software Developer', '2023-07-21', 'frank.davis', 'YourSecurePassword123!', 'Employee';
 
--- TEAM B
-EXEC InsertEmployeeInfo 9, 'Grace', 'Hall', 'Tech Lead', '2023-09-12', 'grace.hall', 'Manager';
-EXEC InsertEmployeeInfo 10, 'Hannah', 'Moore', 'Software Developer', '2023-09-12', 'hannah.moore', 'Employee';
-EXEC InsertEmployeeInfo 11, 'Isaac', 'Clark', 'Software Developer', '2024-01-15', 'isaac.clark', 'Employee';
-EXEC InsertEmployeeInfo 12, 'Jack', 'Lewis', 'Software Developer', '2024-01-20', 'jack.lewis', 'Employee';
+-- TEAM B 
+EXEC InsertEmployeeInfo 9, 'Grace', 'Hall', 'Tech Lead', '2023-09-12', 'grace.hall', 'YourSecurePassword123!', 'Manager';
+EXEC InsertEmployeeInfo 10, 'Hannah', 'Moore', 'Software Developer', '2023-09-12', 'hannah.moore', 'YourSecurePassword123!', 'Employee';
+EXEC InsertEmployeeInfo 11, 'Isaac', 'Clark', 'Software Developer', '2024-01-15', 'isaac.clark', 'YourSecurePassword123!', 'Employee';
+EXEC InsertEmployeeInfo 12, 'Jack', 'Lewis', 'Software Developer', '2024-01-20', 'jack.lewis', 'YourSecurePassword123!', 'Employee';
 
 -- HR
-EXEC InsertEmployeeInfo 13, 'Kate', 'Martin', 'HR Lead', '2023-05-09', 'kate.martin', 'HR';
-EXEC InsertEmployeeInfo 14, 'Liam', 'Walker', 'HR', '2023-07-22', 'liam.walker', 'HR';
+EXEC InsertEmployeeInfo 13, 'Kate', 'Martin', 'HR Lead', '2023-05-09', 'kate.martin', 'YourSecurePassword123!', 'HR';
+EXEC InsertEmployeeInfo 14, 'Liam', 'Walker', 'HR', '2023-07-22', 'liam.walker', 'YourSecurePassword123!', 'HR';
 
 -- SUPPORT
-EXEC InsertEmployeeInfo 15, 'Mia', 'Harris', 'Support Team Lead', '2023-06-13', 'mia.harris', 'Manager';
-EXEC InsertEmployeeInfo 16, 'Noah', 'Clarkson', 'Support Team', '2023-08-25', 'noah.clarkson', 'Employee';
+EXEC InsertEmployeeInfo 15, 'Mia', 'Harris', 'Support Team Lead', '2023-06-13', 'mia.harris', 'YourSecurePassword123!', 'Manager';
+EXEC InsertEmployeeInfo 16, 'Noah', 'Clarkson', 'Support Team', '2023-08-25', 'noah.clarkson', 'YourSecurePassword123!', 'Employee';
+GO
 
 go
 

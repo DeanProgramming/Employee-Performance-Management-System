@@ -1,10 +1,12 @@
 ﻿using EmployeePerformanceApp.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeePerformanceApp.Data
 {
-    public class EmployeePerformanceDbContext : DbContext
+    public class EmployeePerformanceDbContext : IdentityDbContext<IdentityUser>
     {
         public EmployeePerformanceDbContext(DbContextOptions<EmployeePerformanceDbContext> options)
             : base(options)
