@@ -83,16 +83,16 @@
                     <td>@review.review_date.ToShortDateString()</td>
                     <td>@review.score</td>
                     <td>@review.comments</td>
-                    <td>
-                        <form method="post" asp-page-handler="SelectPerformanceReport">
-                            <input type="hidden" name="employeeId" value="@Model.EmployeeId" />
-                            <input type="hidden" name="performanceReviewID" value="@review.review_id" />
-                            <input type="hidden" name="userName" value="@Model.UserName" />
-                            if (@Model.Admin){
-                                <button type="submit" class="btn btn-secondary">Select</button>
-                            }
-                        </form>
-                    </td>
+                    @if (Model.Admin){
+                        <td>
+                            <form method="post" asp-page-handler="SelectPerformanceReport">
+                                <input type="hidden" name="employeeId" value="@Model.EmployeeId" />
+                                <input type="hidden" name="performanceReviewID" value="@review.review_id" />
+                                <input type="hidden" name="userName" value="@Model.UserName" />
+                                    <button type="submit" class="btn btn-secondary">Select</button>
+                            </form>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>

@@ -60,7 +60,7 @@ namespace EmployeePerformanceApp.Pages
 
             if (user != null)
             {
-                if (roles.Contains("Manager"))
+                if (roles.Contains("Manager") || roles.Contains("HR"))
                 {
                     Admin = true;
                 }
