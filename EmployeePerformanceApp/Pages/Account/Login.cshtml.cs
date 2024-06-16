@@ -20,7 +20,9 @@ namespace EmployeePerformanceApp.Pages.Account
         public string Username { get; set; }
 
         [BindProperty]
-        public string Password { get; set; }
+        public string Password { get; set; } 
+
+        public string ErrorMessage { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -45,6 +47,7 @@ namespace EmployeePerformanceApp.Pages.Account
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ErrorMessage = "Invalid Login / Password";
                 }
             }
 

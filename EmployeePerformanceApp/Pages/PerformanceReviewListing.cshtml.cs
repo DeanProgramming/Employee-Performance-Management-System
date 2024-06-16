@@ -7,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.SqlClient;
+using EmployeePerformanceApp.StoredProcedures;
 
 namespace EmployeePerformanceApp.Pages
 {
@@ -38,6 +40,18 @@ namespace EmployeePerformanceApp.Pages
         public string SuccessMessage { get; set; }
 
         public string ErrorMessage { get; set; }
+
+        public bool CreatingNewReport { get; set; }
+        [BindProperty]
+        public DateTime PerformanceReviewDate { get; set; }
+        [BindProperty]
+        public int PerformanceRating { get; set; }
+        [BindProperty]
+        public string PerformanceComments { get; set; }
+        [BindProperty]
+        public bool UpdatePerformanceReview { get; set; }
+        [BindProperty]
+        public int ReviewID { get; set; } 
 
         private async Task SetAdminStatusAsync()
         {
@@ -117,6 +131,138 @@ namespace EmployeePerformanceApp.Pages
             {
                 ErrorMessage = "Employee not found.";
             }
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostOpenNewReportAsync(int employeeId, string userName)
+        {
+            await SetAdminStatusAsync();
+
+            if (!Admin)
+            {
+                return Page();
+            }
+
+            UserName = userName;
+            EmployeeFound = true;
+            EmployeeId = employeeId;
+
+            CreatingNewReport = true;
+            PerformanceReviewDate = DateTime.Today;
+            PerformanceRating = 0;
+            PerformanceComments = "";
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostCancelNewReportAsync(int employeeId, string userName)
+        {
+            await SetAdminStatusAsync();
+
+            if (!Admin)
+            {
+                return Page();
+            }
+
+            UserName = userName;
+            EmployeeFound = true;
+            EmployeeId = employeeId;
+
+            CreatingNewReport = false;
+            UpdatePerformanceReview = false; 
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostCompleteAsync(int employeeId, string userName, int reviewID, int updatingPerforance)
+        {
+            await SetAdminStatusAsync();
+             
+            if (String.IsNullOrEmpty(PerformanceComments))
+            {
+                ErrorMessage = "Requires performance comments";
+                return Page();
+            }
+
+            UserName = userName;
+            EmployeeFound = true;
+            EmployeeId = employeeId; 
+            UpdatePerformanceReview = updatingPerforance == 1;
+
+            if (UpdatePerformanceReview)
+            {
+                SqlParameter[] parameters = new SqlParameter[4];
+
+                parameters[0] = new SqlParameter("@ReviewID", reviewID);
+                parameters[1] = new SqlParameter("@ReviewDate", PerformanceReviewDate);
+                parameters[2] = new SqlParameter("@Score", PerformanceRating);
+                parameters[3] = new SqlParameter("@Comments", PerformanceComments);
+
+                await _context.ExecuteStoredProcedureAsync("UpdatePerformanceReview", parameters);
+
+                PerformanceReviews = await _context.PerformanceReviews
+                    .Where(pr => pr.employee_id == EmployeeId)
+                    .OrderByDescending(pr => pr.review_date)
+                    .ToListAsync();
+
+                SuccessMessage = "Updated Review.";
+            }
+            else 
+            { 
+                SqlParameter[] parameters = new SqlParameter[4];
+
+                parameters[0] = new SqlParameter("@EmployeeID", EmployeeId);
+                parameters[1] = new SqlParameter("@ReviewDate", PerformanceReviewDate);
+                parameters[2] = new SqlParameter("@Score", PerformanceRating);
+                parameters[3] = new SqlParameter("@Comments", PerformanceComments);
+
+                await _context.ExecuteStoredProcedureAsync("InsertPerformanceReview", parameters);
+
+                PerformanceReviews = await _context.PerformanceReviews
+                    .Where(pr => pr.employee_id == EmployeeId)
+                    .OrderByDescending(pr => pr.review_date)
+                    .ToListAsync();
+
+                SuccessMessage = "Added Review.";
+            }
+
+
+
+            PerformanceReviewDate = DateTime.Today;
+            PerformanceRating = 0;
+            PerformanceComments = "";
+            CreatingNewReport = false;
+            UpdatePerformanceReview = false; 
+
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostSelectPerformanceReportAsync(int employeeId, int performanceReviewID, string userName)
+        {
+            await SetAdminStatusAsync();
+
+            if (!Admin)
+            {
+                return Page();
+            }
+
+            UserName = userName;
+            EmployeeFound = true;
+            EmployeeId = employeeId;
+
+
+            PerformanceReviews = await _context.PerformanceReviews
+                .Where(pr => pr.review_id == performanceReviewID)
+                .ToListAsync();
+
+            PerformanceReviewDate = PerformanceReviews[0].review_date;
+            PerformanceRating = PerformanceReviews[0].score;
+            PerformanceComments = PerformanceReviews[0].comments;
+
+            ReviewID = performanceReviewID;
+            CreatingNewReport = false;
+            UpdatePerformanceReview = true; 
 
             return Page();
         }

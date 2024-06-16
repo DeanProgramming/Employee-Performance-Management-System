@@ -6,11 +6,11 @@
 
 <h1>@ViewData["Title"]</h1>
 
-@if (Model.Admin)
-{
+@if (Model.Admin && Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
+{ 
     <form method="post" asp-page-handler="Search">
         <div class="form-group">
-            <label for="searchTerm">Search Term</label>
+            <label for="searchTerm">Search Name or Position</label>
             <input type="text" class="form-control" id="searchTerm" name="SearchTerm" value="@Model.SearchTerm" />
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
@@ -27,8 +27,8 @@
     <div class="alert alert-success">@Model.SuccessMessage</div>
 }
 
-@if (Model.Employees != null && Model.Employees.Any())
-{
+@if (Model.Employees != null && Model.Employees.Any() && Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
+{ 
     <h2>Search Results</h2>
     <table class="table table-striped">
         <thead>
@@ -58,8 +58,8 @@
     </table>
 }
 
-@if (Model.PerformanceReviews != null && Model.PerformanceReviews.Any())
-{
+@if (Model.PerformanceReviews != null && Model.PerformanceReviews.Any() && Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
+{ 
     <h2>Performance Review Dates for @Model.UserName</h2>
     <table class="table table-striped">
         <thead>
@@ -76,8 +76,84 @@
                     <td>@review.review_date.ToShortDateString()</td>
                     <td>@review.score</td>
                     <td>@review.comments</td>
+                    <td>
+                        <form method="post" asp-page-handler="SelectPerformanceReport">
+                            <input type="hidden" name="employeeId" value="@Model.EmployeeId" />
+                            <input type="hidden" name="performanceReviewID" value="@review.review_id" />
+                            <input type="hidden" name="userName" value="@Model.UserName" />
+                            if (@Model.Admin){
+                                <button type="submit" class="btn btn-secondary">Select</button>
+                            }
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
+}
+
+@if (Model.Admin && Model.EmployeeFound)
+{ 
+    if (Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
+    {
+        <form method="post" asp-page-handler="OpenNewReport">
+            <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
+            <input type="hidden" name="userName" value="@Model.UserName" />
+            <button type="submit" class="btn btn-primary">Create New Report</button>
+        </form>
+        return;
+    }
+
+
+    <form method="post" asp-page-handler="CancelNewReport">
+        <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
+        <input type="hidden" name="userName" value="@Model.UserName" />
+        <button type="submit" class="btn btn-primary">Close Report</button>
+    </form>
+
+    <form method="post" asp-page-handler="Complete">
+        <input type="hidden" name="employeeId" value="@Model.EmployeeId" />
+        <input type="hidden" name="userName" value="@Model.UserName" />
+        <input type="hidden" name="reviewID" value="@Model.ReviewID" />
+        <input type="hidden" name="updatingPerforance" value="@(Model.UpdatePerformanceReview ? 1 : 0)" />
+
+        @{
+            if (Model.UpdatePerformanceReview)
+            {
+                <h2>Update Performance Review for @Model.UserName</h2>
+            }
+            else
+            {
+                <h2>Create new Performance Review for @Model.UserName</h2>
+            }
+        }
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Review Date</th>
+                    <th>Score</th>
+                    <th>Comments</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <label for="performanceReviewDate">Performance Review Date</label>
+                        <input type="date" class="form-control" id="performanceReviewDate" name="PerformanceReviewDate" value="@Model.PerformanceReviewDate.ToString("yyyy-MM-dd")" />
+                    </td>
+                    <td>
+                        <label for="performanceRating">Performance Rating</label>
+                        <input type="number" class="form-control" id="performanceRating" name="PerformanceRating" value="@Model.PerformanceRating" />
+                    </td>
+                    <td>
+                        <label for="performanceComments">Performance Comments</label>
+                        <input type="text" class="form-control" id="performanceComments" name="PerformanceComments" value="@Model.PerformanceComments" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary">Complete Report</button>
+    </form>
 }
