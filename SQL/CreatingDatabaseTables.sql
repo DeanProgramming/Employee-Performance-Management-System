@@ -10,8 +10,6 @@ CREATE TABLE Employee.EmployeeInfo (
     first_name VARCHAR(255) NOT NULL,
     last_name VARCHAR(255) NOT NULL,
     position VARCHAR(255) NOT NULL,
-    login_name VARCHAR(255) NOT NULL,
-    passwords VARCHAR(255) NOT NULL,
     role_position VARCHAR(255) NOT NULL,
     hire_date DATE NOT NULL
 );

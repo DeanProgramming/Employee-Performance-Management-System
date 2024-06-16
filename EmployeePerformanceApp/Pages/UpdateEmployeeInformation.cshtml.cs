@@ -82,6 +82,7 @@ namespace EmployeePerformanceApp.Pages
 
             return Page();
         }
+
         public async Task<IActionResult> OnPostUpdateAsync()
         {
             if (!ModelState.IsValid)

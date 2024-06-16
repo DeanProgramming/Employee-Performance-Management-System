@@ -6,34 +6,78 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<form method="post">
-    <div class="form-group">
-        <label for="employeeId">Employee ID</label>
-        <input type="text" class="form-control" id="employeeId" name="EmployeeId" value="@Model.EmployeeId" />
-    </div>
-    <button type="submit" class="btn btn-primary">Get Reviews</button>
-</form>
-
-@if (Model.PerformanceReviews != null && Model.PerformanceReviews.Any())
+@if (Model.Admin)
 {
-    <h2>Performance Review Dates</h2>
+    <form method="post" asp-page-handler="Search">
+        <div class="form-group">
+            <label for="searchTerm">Search Term</label>
+            <input type="text" class="form-control" id="searchTerm" name="SearchTerm" value="@Model.SearchTerm" />
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+}
+
+@if (Model.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@Model.ErrorMessage</div>
+}
+
+@if (Model.SuccessMessage != null)
+{
+    <div class="alert alert-success">@Model.SuccessMessage</div>
+}
+
+@if (Model.Employees != null && Model.Employees.Any())
+{
+    <h2>Search Results</h2>
     <table class="table table-striped">
         <thead>
             <tr>
-            <th>Review Date</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Position</th>
+                <th>Select</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.Employees)
+            {
+                <tr>
+                    <td>@employee.first_name</td>
+                    <td>@employee.last_name</td>
+                    <td>@employee.position</td>
+                    <td>
+                        <form method="post" asp-page-handler="Select">
+                            <input type="hidden" name="employeeId" value="@employee.employee_id" />
+                            <button type="submit" class="btn btn-secondary">Select</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (Model.PerformanceReviews != null && Model.PerformanceReviews.Any())
+{
+    <h2>Performance Review Dates for @Model.UserName</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Review Date</th>
                 <th>Score</th>
                 <th>Comments</th>
-                </tr>
-            </thead>
-            <tbody>
+            </tr>
+        </thead>
+        <tbody>
             @foreach (var review in Model.PerformanceReviews)
             {
-                    <tr>
-                        <td>@review.review_date.ToShortDateString()</td>
-                        <td>@review.score</td>
-                        <td>@review.comments</td>
-                    </tr>
+                <tr>
+                    <td>@review.review_date.ToShortDateString()</td>
+                    <td>@review.score</td>
+                    <td>@review.comments</td>
+                </tr>
             }
-            </tbody>
-        </table>
+        </tbody>
+    </table>
 }

@@ -30,7 +30,7 @@ namespace EmployeePerformanceApp.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByNameAsync(Username);
+                    var user = await _userManager.FindByNameAsync(Username); 
                     var roles = await _userManager.GetRolesAsync(user);
 
                     if (roles.Contains("Manager"))
