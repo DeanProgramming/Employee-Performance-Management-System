@@ -1,12 +1,15 @@
 using EmployeePerformanceApp.StoredProcedures;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace EmployeePerformanceApp.Pages
 {
+    [Authorize(Roles = "HR")]
     public class CreateNewEmployeeEntryModel : PageModel
     {
         private readonly AddNewEmployee _addNewEmployeeRepo;
@@ -81,6 +84,11 @@ namespace EmployeePerformanceApp.Pages
             }
 
             return Page();
+        }
+
+        public IActionResult OnPostGoBackToMenu()
+        {
+            return RedirectToPage("/ManagerMenu");
         }
     }
 }

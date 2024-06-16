@@ -6,6 +6,13 @@
 
 <h1>@ViewData["Title"]</h1>
 
+@if (Model.Admin)
+{
+    <form method="post">
+        <button type="submit" asp-page-handler="GoBackToMenu" class="btn btn-primary"> <h4>Go Back</h4></button>
+    </form>
+}
+
 @if (Model.Admin && Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
 { 
     <form method="post" asp-page-handler="Search">
@@ -14,7 +21,7 @@
             <input type="text" class="form-control" id="searchTerm" name="SearchTerm" value="@Model.SearchTerm" />
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
-    </form>
+    </form>    
 }
 
 @if (Model.ErrorMessage != null)

@@ -266,5 +266,10 @@ namespace EmployeePerformanceApp.Pages
 
             return Page();
         }
+
+        public IActionResult OnPostGoBackToMenu()
+        {
+            return RedirectToPage("/ManagerMenu");
+        }
     }
 }

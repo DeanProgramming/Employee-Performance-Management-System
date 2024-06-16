@@ -35,13 +35,13 @@ namespace EmployeePerformanceApp.Pages.Account
                     var user = await _userManager.FindByNameAsync(Username); 
                     var roles = await _userManager.GetRolesAsync(user);
 
-                    if (roles.Contains("Manager"))
+                    if (roles.Contains("Manager") || roles.Contains("HR"))
                     {
                         return RedirectToPage("/ManagerMenu");
                     }
                     else
                     {
-                        return RedirectToPage("/Users");
+                        return RedirectToPage("/PerformanceReviewListing");
                     }
                 }
                 else

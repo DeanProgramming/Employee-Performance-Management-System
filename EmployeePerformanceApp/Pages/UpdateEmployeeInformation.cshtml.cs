@@ -1,11 +1,14 @@
 using EmployeePerformanceApp.Data;
 using EmployeePerformanceApp.StoredProcedures;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace EmployeePerformanceApp.Pages
 {
+    [Authorize(Roles = "HR")]
     public class UpdateEmployeeInformationModel : PageModel
     {
         private readonly EmployeePerformanceDbContext _context;
@@ -110,6 +113,11 @@ namespace EmployeePerformanceApp.Pages
 
             EmployeeFound = true;
             return Page();
+        }
+
+        public IActionResult OnPostGoBackToMenu()
+        {
+            return RedirectToPage("/ManagerMenu");
         }
     }
 }

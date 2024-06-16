@@ -6,6 +6,29 @@
 
 <h1>@ViewData["Title"]</h1>
 
+@if (Model.IsHR)
+{
+    <h2>
+        HR Actions
+    </h2>
+    <form method="post">
+        <button type="submit" asp-page-handler="GoToAccountChange" class="btn btn-primary"> <h2>Update Employee Information</h2></button>
+    </form>
+    <form method="post">
+        <button type="submit" asp-page-handler="GoToCreateAccount" class="btn btn-primary"> <h2>Create new Employee</h2></button>
+    </form>
+}
+
+<form method="post">
+    <button type="submit" asp-page-handler="GoToPerformanceReview" class="btn btn-primary"> <h2>Add / Update Performance reviews</h2></button>
+</form>
+
+
+
+<h2>
+    Quick Actions
+</h2>
+
 <form method="post">
     <button type="submit" asp-page-handler="GetTop5Employees" class="btn btn-primary">Get Top 5 Employees</button> 
 </form>
@@ -17,6 +40,7 @@
     </div>
     <button type="submit" asp-page-handler="GetEmployeesDueForReview" class="btn btn-primary">Get Employees Due for Review</button>
 </form>
+
 
 @if (!string.IsNullOrEmpty(Model.Message))
 {

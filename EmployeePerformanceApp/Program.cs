@@ -22,7 +22,7 @@ builder.Services.AddScoped<GetTop5EmployeesAverageScore>();
 builder.Services.AddScoped<UpdateEmployeeDetails>();
 
 builder.Services.AddRazorPages();
-
+ 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
