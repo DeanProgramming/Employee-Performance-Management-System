@@ -18,6 +18,7 @@ BEGIN
     VALUES (@EmployeeID, @FirstName, @LastName, @Position, @Role, @HireDate);
 	 
     -- Insert user into AspNetUsers
+	-- Default Password (YourSecurePassword123!)
     INSERT INTO AspNetUsers (Id, UserName, NormalizedUserName, Email, NormalizedEmail, EmailConfirmed, PasswordHash, SecurityStamp, ConcurrencyStamp, PhoneNumberConfirmed, TwoFactorEnabled, LockoutEnabled, AccessFailedCount)
     VALUES (@EmployeeID, @UserName, UPPER(@UserName), @UserName + '@example.com', UPPER(@UserName + '@example.com'), 1, 
             'AQAAAAIAAYagAAAAEC9LifLJYADjCODAqX2wGnmCnA1cACbMkhsEArIPy4ZXvRVG5fZCieOeU51wqjTohg==', 
@@ -199,16 +200,16 @@ EXEC InsertEmployeeDepartmentInfo 7, 2;
 EXEC InsertEmployeeDepartmentInfo 8, 2;
 
 -- Team B in Software Development
-EXEC InsertEmployeeDepartmentInfo 9, 2;
-EXEC InsertEmployeeDepartmentInfo 10, 2;
-EXEC InsertEmployeeDepartmentInfo 11, 2;
-EXEC InsertEmployeeDepartmentInfo 12, 2;
+EXEC InsertEmployeeDepartmentInfo 9, 3;
+EXEC InsertEmployeeDepartmentInfo 10, 3;
+EXEC InsertEmployeeDepartmentInfo 11, 3;
+EXEC InsertEmployeeDepartmentInfo 12, 3;
 
 -- HR Department
 EXEC InsertEmployeeDepartmentInfo 13, 1;
 EXEC InsertEmployeeDepartmentInfo 14, 1;
 
 -- Support Team
-EXEC InsertEmployeeDepartmentInfo 15, 3;
-EXEC InsertEmployeeDepartmentInfo 16, 3;
+EXEC InsertEmployeeDepartmentInfo 15, 4;
+EXEC InsertEmployeeDepartmentInfo 16, 4;
 go

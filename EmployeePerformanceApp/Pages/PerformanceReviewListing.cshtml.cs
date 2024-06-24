@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using EmployeePerformanceApp.StoredProcedures;
+using static EmployeePerformanceApp.Pages.ManagerMenuModel;
 
 namespace EmployeePerformanceApp.Pages
 {
@@ -29,6 +30,9 @@ namespace EmployeePerformanceApp.Pages
         public int EmployeeId { get; set; }
         public bool Admin { get; set; }
         public string UserName { get; set; }
+        public string FormattedUserName {
+            get { return FormatUserName(UserName); }
+        }
 
         [BindProperty]
         public string SearchTerm { get; set; }
@@ -51,7 +55,7 @@ namespace EmployeePerformanceApp.Pages
         [BindProperty]
         public bool UpdatePerformanceReview { get; set; }
         [BindProperty]
-        public int ReviewID { get; set; } 
+        public int ReviewID { get; set; }
 
         private async Task SetAdminStatusAsync()
         {
@@ -270,6 +274,24 @@ namespace EmployeePerformanceApp.Pages
         public IActionResult OnPostGoBackToMenu()
         {
             return RedirectToPage("/ManagerMenu");
+        }
+
+        private string FormatUserName(string userName)
+        {
+            if (string.IsNullOrEmpty(userName))
+            {
+                return string.Empty;
+            }
+
+            var parts = userName.Split('.');
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Length > 0)
+                {
+                    parts[i] = char.ToUpper(parts[i][0]) + parts[i].Substring(1);
+                }
+            }
+            return string.Join(" ", parts);
         }
     }
 }

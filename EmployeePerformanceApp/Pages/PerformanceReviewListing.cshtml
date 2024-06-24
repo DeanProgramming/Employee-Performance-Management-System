@@ -3,8 +3,15 @@
 @{
     ViewData["Title"] = "Performance Reviews";
 }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.3.2/dist/chartjs-adapter-moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.0"></script>
+@using System.Text.Json 
+@using Newtonsoft.Json
 
 <h1>@ViewData["Title"]</h1>
+
 
 @if (Model.Admin)
 {
@@ -67,7 +74,7 @@
 
 @if (Model.PerformanceReviews != null && Model.PerformanceReviews.Any() && Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
 { 
-    <h2>Performance Review Dates for @Model.UserName</h2>
+    <h2>Performance Review Dates for @Model.FormattedUserName</h2>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -97,6 +104,76 @@
             }
         </tbody>
     </table>
+        
+    <canvas id="performanceChart" width="600" height="150"></canvas>
+
+    <script>
+        var EmployeeData = @Html.Raw(JsonConvert.SerializeObject(Model.PerformanceReviews));
+         
+        var EmployeeName = @Html.Raw(JsonConvert.SerializeObject(Model.FormattedUserName));   
+                
+        var average = 0;
+
+        for (let i = 0; i < EmployeeData.length; i++) {
+            average += EmployeeData[i].score;
+        }
+
+        average = average / EmployeeData.length;
+
+        EmployeeData.reverse();
+
+        var ctx = document.getElementById('performanceChart').getContext('2d');
+        var employeeChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: EmployeeData.map(function (review) {
+                    return moment(review.review_date).format('MMM DD, YYYY');
+                }),
+                datasets: [{
+                    label: EmployeeName,
+                    data: EmployeeData.map(function (review) {
+                        return {
+                            x: moment(review.review_date).toDate(),
+                            y: review.score
+                        };
+                    }),
+                    backgroundColor: 'rgba(75, 192, 192, 0.9)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                },
+                plugins: {
+                    annotation: {
+                        annotations: { 
+                            line1: {
+                                type: 'line',
+                                yMin: average,
+                                yMax: average,
+                                borderColor: 'black',
+                                borderWidth: 2,
+                                label: {
+                                    enabled: true,
+                                    content: 'Average at ' + Math.round(average),
+                                    position: 'end',
+                                    backgroundColor: 'rgba(0,0,0,0.8)',
+                                    color: 'white',
+                                    font: {
+                                        style: 'bold'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 }
 
 @if (Model.Admin && Model.EmployeeFound)
@@ -110,7 +187,6 @@
         </form>
         return;
     }
-
 
     <form method="post" asp-page-handler="CancelNewReport">
         <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
@@ -127,11 +203,11 @@
         @{
             if (Model.UpdatePerformanceReview)
             {
-                <h2>Update Performance Review for @Model.UserName</h2>
+                <h2>Update Performance Review for @Model.FormattedUserName</h2>
             }
             else
             {
-                <h2>Create new Performance Review for @Model.UserName</h2>
+                <h2>Create new Performance Review for @Model.FormattedUserName</h2>
             }
         }
 

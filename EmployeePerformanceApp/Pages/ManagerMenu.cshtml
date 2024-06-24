@@ -4,6 +4,13 @@
     ViewData["Title"] = "Manager Menu Buttons";
 }
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.3.2/dist/chartjs-adapter-moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.0.0"></script>
+@using System.Text.Json 
+@using Newtonsoft.Json
+
 <h1>@ViewData["Title"]</h1>
 
 @if (Model.IsHR)
@@ -33,24 +40,32 @@
 
 <h2>Quick Actions</h2>
 <div class="quick-actions">
-    <form method="post" class="mb-3">
-        <button type="submit" asp-page-handler="GetTop5Employees" class="btn btn-primary">Get Top 5 Employees</button>
+    <form method="post" asp-page-handler="GetTop5Employees" class="mb-3">
+        <button type="submit" class="btn btn-primary">Get Top 5 Employees</button>
     </form>
-    <form method="post" class="mb-3">
+    <form method="post" asp-page-handler="GetEmployeesDueForReview" class="mb-3">
         <div class="form-group">
             <label for="MonthCutOff">Enter Month Cutoff:</label>
             <input type="number" id="MonthCutOff" name="MonthCutOff" class="form-control" asp-for="MonthCutOff" />
         </div>
-        <button type="submit" asp-page-handler="GetEmployeesDueForReview" class="btn btn-primary">Get Employees Due for Review</button>
+        <button type="submit" class="btn btn-primary">Get Employees Due for Review</button>
+    </form>
+    <form method="post" asp-page-handler="" class="mb-3">
+        <button type="submit" name="state" value="DisplayAllTeamsReviews" class="btn btn-primary">Display All Teams Reviews</button>
+        <button type="submit" name="state" value="DisplayTeamAReviews" class="btn btn-primary">Display Team A Reviews</button>
+        <button type="submit" name="state" value="DisplayTeamBReviews" class="btn btn-primary">Display Team B Reviews</button>
+        <button type="submit" name="state" value="DisplaySupportReviews" class="btn btn-primary">Display Support Reviews</button>
+        <button type="submit" name="state" value="DisplayHRTeamReviews" class="btn btn-primary">Display HR Team Reviews</button>
     </form>
 </div>
+
 
 @if (!string.IsNullOrEmpty(Model.Message))
 {
     <div class="alert alert-success">@Model.Message</div>
 }
 
-@if (Model.TopEmployees != null && Model.TopEmployees.Count > 0)
+@if (Model.CurrentState == ManagerMenuModel.PageState.Top5Employees && Model.TopEmployees != null && Model.TopEmployees.Count > 0)
 {
     <h2>Top 5 Employees</h2>
     <table class="table table-striped">
@@ -76,7 +91,7 @@
     </table>
 }
 
-@if (Model.EmployeesDueForReview != null && Model.EmployeesDueForReview.Count > 0)
+@if (Model.CurrentState == ManagerMenuModel.PageState.EmployeesDueForReview && Model.EmployeesDueForReview != null && Model.EmployeesDueForReview.Count > 0)
 {
     <h2>Employees Due for Review</h2>
     <table class="table table-striped">
@@ -104,4 +119,133 @@
             }
         </tbody>
     </table>
+}
+
+@{
+    if (Model.CurrentState == ManagerMenuModel.PageState.DisplayAllTeamsReviews)
+    {
+        <h2>All Team Performance Reviews</h2>
+    }
+    if (Model.CurrentState == ManagerMenuModel.PageState.DisplayTeamAReviews)
+    {
+        <h2>Team A Performance Graph</h2>
+    }
+    if (Model.CurrentState == ManagerMenuModel.PageState.DisplayTeamBReviews)
+    {
+        <h2>Team B Performance Graph</h2>
+    }
+    if (Model.CurrentState == ManagerMenuModel.PageState.DisplaySupportReviews)
+    {
+        <h2>Support Team Performance Graph</h2>
+    }
+    if (Model.CurrentState == ManagerMenuModel.PageState.DisplayHRTeamReviews)
+    {        <h2>HR Team Performance Graph</h2>
+    }
+
+    if (Model.CurrentState == ManagerMenuModel.PageState.DisplayAllTeamsReviews
+        ||Model.CurrentState == ManagerMenuModel.PageState.DisplayTeamAReviews
+        || Model.CurrentState == ManagerMenuModel.PageState.DisplayTeamBReviews
+        || Model.CurrentState == ManagerMenuModel.PageState.DisplaySupportReviews
+        ||Model.CurrentState == ManagerMenuModel.PageState.DisplayHRTeamReviews)
+    {
+        <canvas id="performanceChart" width="600" height="150"></canvas>
+    }
+}
+
+@section Scripts {
+    <script>
+        var teamPerformanceData = @Html.Raw(JsonConvert.SerializeObject(Model.EmployeeReviews)); 
+
+        if (teamPerformanceData) {
+            // Extracting the latest performance review for each employee
+            var latestReviews = teamPerformanceData.map(function (employee) {
+                var latestReview = employee.Reviews[employee.Reviews.length - 1];
+                return {
+                    employeeName: employee.EmployeeName,
+                    score: latestReview.Score
+                };
+            });
+
+            var average = 0;
+
+            for (let i = 0; i < latestReviews.length; i++) {
+                average += latestReviews[i].score;
+            }
+
+            average = average / latestReviews.length;
+
+            var ctx = document.getElementById('performanceChart').getContext('2d');
+            var employeeChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: latestReviews.map(function (review) {
+                        return review.employeeName;
+                    }),
+                    datasets: [{
+                        label: 'Latest Performance Review Score',
+                        data: latestReviews.map(function (review) {
+                            return review.score;
+                        }),
+                        backgroundColor: latestReviews.map(function (review, index) {
+                            if (review.score < 70) {
+                                return 'rgba(242, 14, 14, 0.8)';
+                            }
+                            return `rgba(${index * 30 % 255}, ${index * 50 % 255}, ${index * 70 % 255}, 0.2)`;
+                        }),
+                        borderColor: latestReviews.map(function (review, index) {
+                            return `rgba(${index * 30 % 255}, ${index * 50 % 255}, ${index * 70 % 255}, 1)`;
+                        }),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: {
+                                line1: {
+                                    type: 'line',
+                                    yMin: 70,
+                                    yMax: 70,
+                                    borderColor: 'black',
+                                    borderWidth: 2,
+                                    label: {
+                                        enabled: true,
+                                        content: 'Cutoff at 70',
+                                        position: 'end',
+                                        backgroundColor: 'rgba(0,0,0,0.8)',
+                                        color: 'white',
+                                        font: {
+                                            style: 'bold'
+                                        }
+                                    }
+                                },
+                                line2: {
+                                    type: 'line',
+                                    yMin: average,
+                                    yMax: average,
+                                    borderColor: 'black',
+                                    borderWidth: 2,
+                                    label: {
+                                        enabled: true,
+                                        content: 'Average at ' + Math.round(average),
+                                        position: 'start',
+                                        backgroundColor: 'rgba(0,0,0,0.8)',
+                                        color: 'white',
+                                        font: {
+                                            style: 'bold'
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
 }
