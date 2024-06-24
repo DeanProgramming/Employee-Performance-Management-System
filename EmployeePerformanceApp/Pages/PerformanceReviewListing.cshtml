@@ -72,6 +72,73 @@
     </table>
 }
 
+@if (Model.Admin && Model.EmployeeFound)
+{
+    if (Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
+    {
+        <form method="post" asp-page-handler="OpenNewReport">
+            <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
+            <input type="hidden" name="userName" value="@Model.UserName" />
+            <button type="submit" class="btn btn-primary">Create New Report</button>
+        </form>
+    }
+    else
+    {
+        <form method="post" asp-page-handler="CancelNewReport">
+            <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
+            <input type="hidden" name="userName" value="@Model.UserName" />
+            <button type="submit" class="btn btn-primary">Close Report</button>
+        </form>
+
+        <form method="post" asp-page-handler="Complete">
+            <input type="hidden" name="employeeId" value="@Model.EmployeeId" />
+            <input type="hidden" name="userName" value="@Model.UserName" />
+            <input type="hidden" name="reviewID" value="@Model.ReviewID" />
+            <input type="hidden" name="updatingPerforance" value="@(Model.UpdatePerformanceReview ? 1 : 0)" />
+
+            @{
+                if (Model.UpdatePerformanceReview)
+                {
+                    <h2>Update Performance Review for @Model.FormattedUserName</h2>
+                }
+                else
+                {
+                    <h2>Create new Performance Review for @Model.FormattedUserName</h2>
+                }
+            }
+
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Review Date</th>
+                        <th>Score</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <label for="performanceReviewDate">Performance Review Date</label>
+                            <input type="date" class="form-control" id="performanceReviewDate" name="PerformanceReviewDate" value="@Model.PerformanceReviewDate.ToString("yyyy-MM-dd")" />
+                        </td>
+                        <td>
+                            <label for="performanceRating">Performance Rating</label>
+                            <input type="number" class="form-control" id="performanceRating" name="PerformanceRating" value="@Model.PerformanceRating" />
+                        </td>
+                        <td>
+                            <label for="performanceComments">Performance Comments</label>
+                            <input type="text" class="form-control" id="performanceComments" name="PerformanceComments" value="@Model.PerformanceComments" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button type="submit" class="btn btn-primary">Complete Report</button>
+        </form>
+    }
+}
+
+
 @if (Model.PerformanceReviews != null && Model.PerformanceReviews.Any() && Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
 { 
     <h2>Performance Review Dates for @Model.FormattedUserName</h2>
@@ -176,67 +243,3 @@
     </script>
 }
 
-@if (Model.Admin && Model.EmployeeFound)
-{ 
-    if (Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
-    {
-        <form method="post" asp-page-handler="OpenNewReport">
-            <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
-            <input type="hidden" name="userName" value="@Model.UserName" />
-            <button type="submit" class="btn btn-primary">Create New Report</button>
-        </form>
-        return;
-    }
-
-    <form method="post" asp-page-handler="CancelNewReport">
-        <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
-        <input type="hidden" name="userName" value="@Model.UserName" />
-        <button type="submit" class="btn btn-primary">Close Report</button>
-    </form>
-
-    <form method="post" asp-page-handler="Complete">
-        <input type="hidden" name="employeeId" value="@Model.EmployeeId" />
-        <input type="hidden" name="userName" value="@Model.UserName" />
-        <input type="hidden" name="reviewID" value="@Model.ReviewID" />
-        <input type="hidden" name="updatingPerforance" value="@(Model.UpdatePerformanceReview ? 1 : 0)" />
-
-        @{
-            if (Model.UpdatePerformanceReview)
-            {
-                <h2>Update Performance Review for @Model.FormattedUserName</h2>
-            }
-            else
-            {
-                <h2>Create new Performance Review for @Model.FormattedUserName</h2>
-            }
-        }
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Review Date</th>
-                    <th>Score</th>
-                    <th>Comments</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <label for="performanceReviewDate">Performance Review Date</label>
-                        <input type="date" class="form-control" id="performanceReviewDate" name="PerformanceReviewDate" value="@Model.PerformanceReviewDate.ToString("yyyy-MM-dd")" />
-                    </td>
-                    <td>
-                        <label for="performanceRating">Performance Rating</label>
-                        <input type="number" class="form-control" id="performanceRating" name="PerformanceRating" value="@Model.PerformanceRating" />
-                    </td>
-                    <td>
-                        <label for="performanceComments">Performance Comments</label>
-                        <input type="text" class="form-control" id="performanceComments" name="PerformanceComments" value="@Model.PerformanceComments" />
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <button type="submit" class="btn btn-primary">Complete Report</button>
-    </form>
-}

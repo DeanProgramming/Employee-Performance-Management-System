@@ -41,3 +41,16 @@ CREATE TABLE Department.EmployeeDepartment (
     CONSTRAINT FK_Department_EmployeeDepartment FOREIGN KEY (department_id) 
         REFERENCES Department.DepartmentInfo(department_id) ON DELETE CASCADE
 );
+
+CREATE TABLE Employee.PerformanceReviewAudit (
+    audit_id INT IDENTITY (1,1) PRIMARY KEY,
+    review_id INT NOT NULL,
+    employee_id INT NOT NULL,
+    review_date DATE NOT NULL,
+    score INT NOT NULL,
+    comments VARCHAR(255),
+    operation_type VARCHAR(10) NOT NULL,  -- 'INSERT' or 'UPDATE'
+    operation_timestamp DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Employee_PerformanceReviewAudit FOREIGN KEY (review_id) 
+        REFERENCES Employee.PerformanceReview(review_id) ON DELETE CASCADE
+);
