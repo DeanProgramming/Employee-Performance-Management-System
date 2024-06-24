@@ -86,74 +86,169 @@ END;
 go
 
 --TEAM A 
-EXEC InsertPerformanceReview 1, '2023-04-15', 92, 'Continued strong leadership skills';
-EXEC InsertPerformanceReview 1, '2023-06-20', 88, 'Effective team collaboration';
-EXEC InsertPerformanceReview 1, '2023-09-25', 91, 'Exceeds expectations in all tasks';
+-- TEAM A
+-- John Doe (steady decline)
+EXEC InsertPerformanceReview 1, '2023-01-10', 90, 'Strong start to the year, excellent leadership';
+EXEC InsertPerformanceReview 1, '2023-03-10', 88, 'Maintaining performance, good team collaboration';
+EXEC InsertPerformanceReview 1, '2023-05-10', 85, 'Slight decline in output, needs to focus on delegation';
+EXEC InsertPerformanceReview 1, '2023-07-10', 82, 'Decreased productivity, improvement needed in time management';
+EXEC InsertPerformanceReview 1, '2023-09-10', 78, 'Needs improvement, focus on team engagement';
+EXEC InsertPerformanceReview 1, '2023-11-10', 75, 'Further decline, address performance issues';
+EXEC InsertPerformanceReview 1, '2024-01-10', 70, 'Needs significant improvement, focus on strategic planning';
+EXEC InsertPerformanceReview 1, '2024-03-10', 68, 'Performance issues, requires attention to detail';
 
-EXEC InsertPerformanceReview 2, '2023-05-10', 82, 'Improving communication skills';
-EXEC InsertPerformanceReview 2, '2023-07-15', 85, 'Strong technical abilities';
-EXEC InsertPerformanceReview 2, '2023-11-22', 87, 'Excellent problem-solving skills';
+-- Jane Smith (gradual improvement)
+EXEC InsertPerformanceReview 2, '2023-01-15', 70, 'Needs improvement, work on technical skills';
+EXEC InsertPerformanceReview 2, '2023-03-15', 72, 'Slight improvement, good progress in coding practices';
+EXEC InsertPerformanceReview 2, '2023-05-15', 75, 'Continuing to improve, better communication with team';
+EXEC InsertPerformanceReview 2, '2023-07-15', 78, 'Good progress, strong technical abilities';
+EXEC InsertPerformanceReview 2, '2023-09-15', 80, 'Solid performance, shows potential in problem-solving';
+EXEC InsertPerformanceReview 2, '2023-11-15', 82, 'Consistently improving, great at handling tasks independently';
+EXEC InsertPerformanceReview 2, '2024-01-15', 85, 'Strong performance, excellent team player';
+EXEC InsertPerformanceReview 2, '2024-03-15', 88, 'Exceeds expectations, innovative solutions';
 
-EXEC InsertPerformanceReview 3, '2023-04-18', 78, 'Steady improvement';
-EXEC InsertPerformanceReview 3, '2023-06-25', 80, 'Good project delivery';
-EXEC InsertPerformanceReview 3, '2023-09-10', 83, 'Consistent performance';
+-- Alice Johnson (steady performance)
+EXEC InsertPerformanceReview 3, '2023-01-20', 78, 'Consistent performance, reliable in project delivery';
+EXEC InsertPerformanceReview 3, '2023-03-20', 80, 'Maintaining standards, good project management';
+EXEC InsertPerformanceReview 3, '2023-05-20', 82, 'Good work, excellent in meeting deadlines';
+EXEC InsertPerformanceReview 3, '2023-07-20', 81, 'Stable performance, shows leadership potential';
+EXEC InsertPerformanceReview 3, '2023-09-20', 83, 'Slight improvement, effective communicator';
+EXEC InsertPerformanceReview 3, '2023-11-20', 82, 'Maintaining consistency, reliable team member';
+EXEC InsertPerformanceReview 3, '2024-01-20', 84, 'Solid performance, good technical knowledge';
+EXEC InsertPerformanceReview 3, '2024-03-20', 85, 'Good progress, proactive problem-solving';
 
-EXEC InsertPerformanceReview 4, '2023-11-05', 68, 'Improving in code quality';
-EXEC InsertPerformanceReview 4, '2024-01-15', 72, 'Better communication';
-EXEC InsertPerformanceReview 4, '2024-03-10', 75, 'Meeting performance expectations';
+-- Bob Williams (gradual improvement)
+EXEC InsertPerformanceReview 4, '2023-01-25', 65, 'Needs improvement, focus on code quality';
+EXEC InsertPerformanceReview 4, '2023-03-25', 68, 'Slight improvement, better communication skills';
+EXEC InsertPerformanceReview 4, '2023-05-25', 70, 'Improving performance, showing potential';
+EXEC InsertPerformanceReview 4, '2023-07-25', 73, 'Continued improvement, strong technical abilities';
+EXEC InsertPerformanceReview 4, '2023-09-25', 75, 'Good progress, excellent problem-solving skills';
+EXEC InsertPerformanceReview 4, '2023-11-25', 78, 'Solid performance, reliable team member';
+EXEC InsertPerformanceReview 4, '2024-01-25', 80, 'Strong performance, great collaboration with peers';
+EXEC InsertPerformanceReview 4, '2024-03-25', 82, 'Exceeds expectations, innovative thinker';
 
-EXEC InsertPerformanceReview 5, '2023-07-10', 84, 'Solid performance';
-EXEC InsertPerformanceReview 5, '2023-10-22', 88, 'Great leadership';
-EXEC InsertPerformanceReview 5, '2024-01-05', 90, 'Exemplary work ethic';
+-- Charlie Brown (steady decline)
+EXEC InsertPerformanceReview 5, '2023-01-30', 85, 'Solid start, good technical skills';
+EXEC InsertPerformanceReview 5, '2023-03-30', 83, 'Slight decline, needs to focus on details';
+EXEC InsertPerformanceReview 5, '2023-05-30', 80, 'Continued decline, work on improving code quality';
+EXEC InsertPerformanceReview 5, '2023-07-30', 78, 'Needs improvement, focus on communication';
+EXEC InsertPerformanceReview 5, '2023-09-30', 75, 'Performance issues, address team engagement';
+EXEC InsertPerformanceReview 5, '2023-11-30', 73, 'Further decline, requires attention to deadlines';
+EXEC InsertPerformanceReview 5, '2024-01-30', 70, 'Needs significant improvement, focus on task completion';
+EXEC InsertPerformanceReview 5, '2024-03-30', 68, 'Performance concerns, work on time management';
 
-EXEC InsertPerformanceReview 6, '2023-08-12', 58, 'Needs more focus';
-EXEC InsertPerformanceReview 6, '2023-10-15', 62, 'Showing improvement';
-EXEC InsertPerformanceReview 6, '2024-01-20', 68, 'Consistent progress';
+-- David Jones (gradual improvement)
+EXEC InsertPerformanceReview 6, '2023-03-01', 55, 'Poor start, needs to focus on basics';
+EXEC InsertPerformanceReview 6, '2023-05-01', 60, 'Slight improvement, better understanding of tasks';
+EXEC InsertPerformanceReview 6, '2023-07-01', 65, 'Continued improvement, showing potential';
+EXEC InsertPerformanceReview 6, '2023-09-01', 68, 'Better performance, good technical skills';
+EXEC InsertPerformanceReview 6, '2023-11-01', 70, 'Good progress, reliable team member';
+EXEC InsertPerformanceReview 6, '2024-01-01', 73, 'Solid performance, excellent collaboration';
+EXEC InsertPerformanceReview 6, '2024-03-01', 75, 'Strong improvement, great problem-solving skills';
+EXEC InsertPerformanceReview 6, '2024-05-01', 78, 'Exceeds expectations, innovative thinker';
 
-EXEC InsertPerformanceReview 7, '2023-07-25', 92, 'Exceptional work quality';
-EXEC InsertPerformanceReview 7, '2023-10-10', 94, 'Outstanding problem solving';
-EXEC InsertPerformanceReview 7, '2024-01-15', 95, 'Excellent performance';
+-- Eva Miller (steady performance)
+EXEC InsertPerformanceReview 7, '2023-05-05', 90, 'Excellent start, outstanding work quality';
+EXEC InsertPerformanceReview 7, '2023-07-05', 92, 'Continued excellence, great problem-solving skills';
+EXEC InsertPerformanceReview 7, '2023-09-05', 93, 'Outstanding work, excellent in meeting deadlines';
+EXEC InsertPerformanceReview 7, '2023-11-05', 94, 'Maintaining high standards, reliable team member';
+EXEC InsertPerformanceReview 7, '2024-01-05', 92, 'Slight decline, still excellent performance';
+EXEC InsertPerformanceReview 7, '2024-03-05', 93, 'Excellent performance, strong technical skills';
+EXEC InsertPerformanceReview 7, '2024-05-05', 94, 'Outstanding work, great team collaboration';
+EXEC InsertPerformanceReview 7, '2024-07-05', 95, 'Exceeds expectations, innovative solutions';
 
-EXEC InsertPerformanceReview 8, '2023-08-20', 83, 'Good collaboration skills';
-EXEC InsertPerformanceReview 8, '2023-11-15', 85, 'Consistent contributions';
-EXEC InsertPerformanceReview 8, '2024-01-10', 88, 'Reliable and dependable';
+-- Frank Davis (steady performance)
+EXEC InsertPerformanceReview 8, '2023-09-01', 82, 'Good start, strong technical skills';
+EXEC InsertPerformanceReview 8, '2023-11-01', 83, 'Maintaining performance, reliable team member';
+EXEC InsertPerformanceReview 8, '2024-01-01', 84, 'Consistent performance, good problem-solving skills';
+EXEC InsertPerformanceReview 8, '2024-03-01', 85, 'Solid performance, excellent collaboration';
+EXEC InsertPerformanceReview 8, '2024-05-01', 86, 'Great progress, reliable and dependable';
+EXEC InsertPerformanceReview 8, '2024-07-01', 87, 'Maintaining high standards, strong technical knowledge';
+EXEC InsertPerformanceReview 8, '2024-09-01', 88, 'Good work, excellent in meeting deadlines';
+EXEC InsertPerformanceReview 8, '2024-11-01', 89, 'Outstanding performance, innovative thinker';
 
---TEAM B
-EXEC InsertPerformanceReview 9, '2023-10-10', 90, 'Strong leadership';
-EXEC InsertPerformanceReview 9, '2023-12-05', 92, 'Excellent strategic planning';
-EXEC InsertPerformanceReview 9, '2024-02-10', 94, 'Great team management';
+-- TEAM B
+-- Grace Hall (steady performance)
+EXEC InsertPerformanceReview 9, '2023-10-10', 90, 'Strong leadership, excellent team management';
+EXEC InsertPerformanceReview 9, '2023-12-10', 92, 'Great strategic planning, effective collaboration';
+EXEC InsertPerformanceReview 9, '2024-02-10', 94, 'Outstanding management, reliable and dependable';
+EXEC InsertPerformanceReview 9, '2024-04-10', 93, 'Consistent performance, excellent problem-solving skills';
+EXEC InsertPerformanceReview 9, '2024-06-10', 92, 'Maintaining standards, good team engagement';
+EXEC InsertPerformanceReview 9, '2024-08-10', 91, 'Slight decline, focus on strategic goals';
+EXEC InsertPerformanceReview 9, '2024-10-10', 90, 'Strong performance, effective leadership';
+EXEC InsertPerformanceReview 9, '2024-12-10', 89, 'Maintaining high standards, needs focus on delegation';
 
-EXEC InsertPerformanceReview 10, '2023-07-20', 81, 'Solid technical skills';
-EXEC InsertPerformanceReview 10, '2023-10-18', 84, 'Good coding practices';
-EXEC InsertPerformanceReview 10, '2024-01-22', 86, 'Consistent performance';
+-- Hannah Moore (gradual improvement)
+EXEC InsertPerformanceReview 10, '2023-09-15', 65, 'Needs improvement, focus on technical skills';
+EXEC InsertPerformanceReview 10, '2023-11-15', 70, 'Slight improvement, better understanding of tasks';
+EXEC InsertPerformanceReview 10, '2024-01-15', 75, 'Continued improvement, strong coding practices';
+EXEC InsertPerformanceReview 10, '2024-03-15', 78, 'Good progress, reliable team member';
+EXEC InsertPerformanceReview 10, '2024-05-15', 80, 'Solid performance, good problem-solving skills';
+EXEC InsertPerformanceReview 10, '2024-07-15', 82, 'Strong improvement, effective communicator';
+EXEC InsertPerformanceReview 10, '2024-09-15', 85, 'Excellent performance, innovative thinker';
+EXEC InsertPerformanceReview 10, '2024-11-15', 88, 'Exceeds expectations, reliable and dependable';
 
-EXEC InsertPerformanceReview 11, '2023-08-10', 85, 'Reliable team member';
-EXEC InsertPerformanceReview 11, '2023-11-20', 87, 'Good time management';
-EXEC InsertPerformanceReview 11, '2024-02-25', 89, 'Dependable and consistent';
+-- Isaac Clark (steady performance)
+EXEC InsertPerformanceReview 11, '2024-01-20', 78, 'Good start, strong technical skills';
+EXEC InsertPerformanceReview 11, '2024-03-20', 80, 'Maintaining standards, reliable team member';
+EXEC InsertPerformanceReview 11, '2024-05-20', 82, 'Good work, excellent problem-solving skills';
+EXEC InsertPerformanceReview 11, '2024-07-20', 81, 'Stable performance, effective communicator';
+EXEC InsertPerformanceReview 11, '2024-09-20', 83, 'Slight improvement, reliable and dependable';
+EXEC InsertPerformanceReview 11, '2024-11-20', 82, 'Consistent performance, strong technical abilities';
+EXEC InsertPerformanceReview 11, '2025-01-20', 84, 'Solid performance, great collaboration';
+EXEC InsertPerformanceReview 11, '2025-03-20', 85, 'Good progress, innovative solutions';
 
-EXEC InsertPerformanceReview 12, '2023-09-15', 80, 'Solid work ethic';
-EXEC InsertPerformanceReview 12, '2023-12-10', 82, 'Good teamwork';
-EXEC InsertPerformanceReview 12, '2024-03-05', 84, 'Consistently meets expectations';
+-- Jack Lewis (gradual improvement)
+EXEC InsertPerformanceReview 12, '2024-01-25', 60, 'Needs improvement, focus on basics';
+EXEC InsertPerformanceReview 12, '2024-03-25', 65, 'Slight improvement, better understanding of tasks';
+EXEC InsertPerformanceReview 12, '2024-05-25', 70, 'Continued improvement, strong technical skills';
+EXEC InsertPerformanceReview 12, '2024-07-25', 73, 'Good progress, reliable team member';
+EXEC InsertPerformanceReview 12, '2024-09-25', 75, 'Solid performance, good problem-solving skills';
+EXEC InsertPerformanceReview 12, '2024-11-25', 78, 'Strong improvement, effective communicator';
+EXEC InsertPerformanceReview 12, '2025-01-25', 80, 'Excellent performance, innovative thinker';
+EXEC InsertPerformanceReview 12, '2025-03-25', 82, 'Exceeds expectations, reliable and dependable';
 
---HR
-EXEC InsertPerformanceReview 13, '2023-07-25', 88, 'Strong HR management';
-EXEC InsertPerformanceReview 13, '2023-10-30', 90, 'Excellent employee relations';
-EXEC InsertPerformanceReview 13, '2024-01-20', 92, 'Great at resolving conflicts';
+-- HR
+-- Kate Martin (steady performance)
+EXEC InsertPerformanceReview 13, '2023-07-25', 88, 'Strong HR management, great employee relations';
+EXEC InsertPerformanceReview 13, '2023-09-25', 89, 'Maintaining standards, effective in conflict resolution';
+EXEC InsertPerformanceReview 13, '2023-11-25', 90, 'Excellent performance, strong communication skills';
+EXEC InsertPerformanceReview 13, '2024-01-25', 91, 'Consistent performance, good team collaboration';
+EXEC InsertPerformanceReview 13, '2024-03-25', 92, 'Outstanding work, reliable and dependable';
+EXEC InsertPerformanceReview 13, '2024-05-25', 91, 'Maintaining high standards, effective problem-solving';
+EXEC InsertPerformanceReview 13, '2024-07-25', 90, 'Strong performance, excellent employee engagement';
+EXEC InsertPerformanceReview 13, '2024-09-25', 89, 'Consistent performance, reliable and dependable';
 
-EXEC InsertPerformanceReview 14, '2023-08-20', 78, 'Dependable performance';
-EXEC InsertPerformanceReview 14, '2023-11-10', 80, 'Good HR support';
-EXEC InsertPerformanceReview 14, '2024-01-25', 83, 'Consistent and reliable';
+-- Liam Walker (steady decline)
+EXEC InsertPerformanceReview 14, '2023-08-20', 78, 'Dependable performance, good HR support';
+EXEC InsertPerformanceReview 14, '2023-10-20', 76, 'Slight decline, needs to focus on communication';
+EXEC InsertPerformanceReview 14, '2023-12-20', 74, 'Continued decline, work on problem-solving';
+EXEC InsertPerformanceReview 14, '2024-02-20', 72, 'Needs improvement, focus on team collaboration';
+EXEC InsertPerformanceReview 14, '2024-04-20', 70, 'Performance issues, address team engagement';
+EXEC InsertPerformanceReview 14, '2024-06-20', 68, 'Further decline, requires attention to detail';
+EXEC InsertPerformanceReview 14, '2024-08-20', 66, 'Needs significant improvement, focus on task completion';
+EXEC InsertPerformanceReview 14, '2024-10-20', 65, 'Performance concerns, work on time management';
 
---SUPPORT
-EXEC InsertPerformanceReview 15, '2023-09-15', 87, 'Great customer service';
-EXEC InsertPerformanceReview 15, '2023-12-05', 89, 'Excellent problem resolution';
-EXEC InsertPerformanceReview 15, '2024-02-28', 91, 'Outstanding support skills';
+-- SUPPORT
+-- Mia Harris (steady performance)
+EXEC InsertPerformanceReview 15, '2023-09-15', 87, 'Great customer service, strong problem resolution';
+EXEC InsertPerformanceReview 15, '2023-11-15', 88, 'Maintaining standards, effective support skills';
+EXEC InsertPerformanceReview 15, '2024-01-15', 89, 'Excellent performance, reliable and dependable';
+EXEC InsertPerformanceReview 15, '2024-03-15', 90, 'Consistent performance, good team collaboration';
+EXEC InsertPerformanceReview 15, '2024-05-15', 91, 'Outstanding work, effective in resolving issues';
+EXEC InsertPerformanceReview 15, '2024-07-15', 90, 'Maintaining high standards, great customer interaction';
+EXEC InsertPerformanceReview 15, '2024-09-15', 89, 'Strong performance, reliable support';
+EXEC InsertPerformanceReview 15, '2024-11-15', 88, 'Consistent performance, good technical skills';
 
-EXEC InsertPerformanceReview 16, '2023-08-10', 79, 'Good technical support';
-EXEC InsertPerformanceReview 16, '2023-11-20', 82, 'Reliable troubleshooting';
-EXEC InsertPerformanceReview 16, '2024-03-01', 84, 'Consistent service quality';
-
-
+-- Noah Clarkson (gradual improvement)
+EXEC InsertPerformanceReview 16, '2023-08-10', 65, 'Needs improvement, focus on technical support';
+EXEC InsertPerformanceReview 16, '2023-10-10', 68, 'Slight improvement, better problem-solving skills';
+EXEC InsertPerformanceReview 16, '2023-12-10', 70, 'Continued improvement, reliable team member';
+EXEC InsertPerformanceReview 16, '2024-02-10', 73, 'Good progress, effective communicator';
+EXEC InsertPerformanceReview 16, '2024-04-10', 75, 'Solid performance, good troubleshooting skills';
+EXEC InsertPerformanceReview 16, '2024-06-10', 78, 'Strong improvement, great customer service';
+EXEC InsertPerformanceReview 16, '2024-08-10', 80, 'Excellent performance, innovative thinker';
+EXEC InsertPerformanceReview 16, '2024-10-10', 82, 'Exceeds expectations, reliable and dependable';
 
 go
 
