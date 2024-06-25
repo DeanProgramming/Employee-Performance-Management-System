@@ -117,4 +117,50 @@ label {
     .table {
         font-size: 0.875rem;
     }
+} 
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;  
+}
+
+    .quick-actions form {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 10px; 
+    }
+
+    .quick-actions .form-group {
+        margin-bottom: 0;
+    }
+
+    .quick-actions .btn {
+        margin-bottom: 0;
+        margin-left: 5px; 
+    }
+     
+@media (max-width: 768px) {
+    .quick-actions .btn {
+        width: 100%;  
+    }
+}
+ 
+.hr-actions {
+    display: flex;
+}
+
+    .hr-actions form {
+        margin-bottom: 10px;  
+    }
+
+    .hr-actions .btn {
+        margin-bottom: 0;
+        margin-right: 10px; 
+    }
+     
+@media (max-width: 768px) {
+    .hr-actions .btn {
+        width: 100%; 
+        margin-right: 0;
+        margin-bottom: 5px;  
+    }
 }
