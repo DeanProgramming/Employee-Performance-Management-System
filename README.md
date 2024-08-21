@@ -4,6 +4,10 @@
 
 **Employee Performance Management System** is an ASP.NET Core MVC application designed to streamline the management of employee records and performance evaluations within an organization. The project utilizes **.NET 6.0**, **ASP.NET MVC**, **Microsoft SQL Server Management Studio**, **T-SQL**, **Entity Framework Core**, and **JavaScript** to provide a robust solution for tracking employee data, conducting performance reviews, and generating insightful reports.
 
+## Design Documentation
+
+[Design Document](https://deanprogramming.github.io/CV/Dean%20H%20-%20Employee%20Performance%20Management%20System%20Design%20Document.pdf) 
+
 ## Features
 
 - **Employee Records Management:** The system efficiently manages employee records using **Microsoft SQL Server**, ensuring data accuracy and accessibility.
