@@ -1,12 +1,17 @@
-/* Global settings */
-html {
-    font-size: 14px;
+ 
+:root {
+    --btn-radius: 12px;
+    --btn-font-weight: 600;
+    --btn-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    --btn-shadow-hover: 0 10px 22px rgba(0, 0, 0, 0.12);
+    --primary: #2563eb; 
+    --primary-hover: #1d4ed8;
+    --primary-active: #1e40af;
+    --focus-ring: 0 0 0 0.15rem rgba(37, 99, 235, 0.18), 0 0 0 0.35rem rgba(37, 99, 235, 0.22);
 }
 
-@media (min-width: 768px) {
-    html {
-        font-size: 16px;
-    }
+html {
+    font-size: 14px;
 }
 
 body {
@@ -14,31 +19,72 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
 }
-
-/* Buttons */
-.btn-primary {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: white;
+ 
+.btn:not(.manager-dashboard .btn) {
+    border-radius: var(--btn-radius);
+    font-weight: 500; 
+    font-size: 0.95rem;
+    letter-spacing: normal;
+    line-height: 1.2;
+    padding: 0.5rem 1rem;
+    border-width: 1px;
+    font-family: inherit;
+    text-rendering: optimizeLegibility;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease, border-color 0.12s ease;
+}
+ 
+.btn-primary:not(.manager-dashboard .btn-primary) {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0)), var(--primary);
+    border-color: rgba(0, 0, 0, 0.06);
+    color: #fff;
+    box-shadow: var(--btn-shadow);
 }
 
-    .btn-primary:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
+    .btn-primary:not(.manager-dashboard .btn-primary):hover {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)), var(--primary-hover);
+        border-color: rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+        box-shadow: var(--btn-shadow-hover);
     }
 
-    .btn-primary:focus, .btn-primary:active:focus {
-        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    .btn-primary:not(.manager-dashboard .btn-primary):active,
+    .btn-primary:not(.manager-dashboard .btn-primary).active {
+        background: var(--primary-active);
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
-
-.btn-link.nav-link:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+     
+.btn:not(.manager-dashboard .btn):focus,
+.btn:not(.manager-dashboard .btn):focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+}
+ 
+.btn-outline-primary:not(.manager-dashboard .btn-outline-primary) {
+    border-radius: var(--btn-radius);
+    font-weight: var(--btn-font-weight);
+    color: var(--primary);
+    border-color: rgba(37, 99, 235, 0.35);
+    background: rgba(37, 99, 235, 0.04);
 }
 
+    .btn-outline-primary:not(.manager-dashboard .btn-outline-primary):hover {
+        background: rgba(37, 99, 235, 0.1);
+        border-color: rgba(37, 99, 235, 0.55);
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+    }
+     
+.btn-link.nav-link:not(.manager-dashboard .btn-link.nav-link) {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .btn-link.nav-link:not(.manager-dashboard .btn-link.nav-link):hover {
+        text-decoration: underline;
+    }
+     
 /* Forms */
-.form-control:focus {
-    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
 
 .form-group {
     margin-bottom: 1rem;
@@ -48,19 +94,25 @@ body {
     border-radius: 0.25rem;
 }
 
+    .form-control:focus {
+        box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    }
+
 label {
     font-weight: bold;
     margin-top: 0.5rem;
 }
 
 /* Tables */
+
 .table {
     width: 100%;
     margin-bottom: 1rem;
     background-color: white;
 }
 
-    .table th, .table td {
+    .table th,
+    .table td {
         padding: 0.75rem;
         vertical-align: top;
         border-top: 1px solid #dee2e6;
@@ -79,7 +131,8 @@ label {
     background-color: rgba(0, 0, 0, 0.05);
 }
 
-/* Alerts */
+/* warnings */
+
 .alert {
     padding: 0.75rem 1.25rem;
     margin-bottom: 1rem;
@@ -99,7 +152,92 @@ label {
     border-color: #f5c6cb;
 }
 
-/* Responsive design */
+/*Quick Actions*/
+
+.quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .quick-actions form {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 10px;
+    }
+
+    .quick-actions .form-group {
+        margin-bottom: 0;
+    }
+
+    .quick-actions .btn {
+        margin-bottom: 0;
+        margin-left: 5px;
+    }
+
+/* HR Actions */
+
+.hr-actions {
+    display: flex;
+}
+
+    .hr-actions form {
+        margin-bottom: 10px;
+    }
+
+    .hr-actions .btn {
+        margin-bottom: 0;
+        margin-right: 10px;
+    }
+
+/*  Manager */
+
+.manager-dashboard h1 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+}
+
+.manager-dashboard .card {
+    border: 0;
+    border-radius: 14px;
+}
+
+.manager-dashboard .card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 1rem 1.25rem;
+}
+
+.manager-dashboard .card-body {
+    padding: 1.25rem;
+}
+
+.manager-dashboard .btn {
+    border-radius: 10px;
+}
+
+.manager-dashboard .btn-group-vertical .btn {
+    border-radius: 10px;
+    margin-bottom: 0.5rem;
+}
+
+    .manager-dashboard .btn-group-vertical .btn:last-child {
+        margin-bottom: 0;
+    }
+
+.manager-dashboard .table thead th {
+    font-weight: 600;
+}
+
+.manager-dashboard .chart-wrap {
+    height: 340px;
+}
+
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
 @media (max-width: 768px) {
     html {
         font-size: 14px;
@@ -117,50 +255,14 @@ label {
     .table {
         font-size: 0.875rem;
     }
-} 
-.quick-actions {
-    display: flex;
-    flex-wrap: wrap;  
-}
 
-    .quick-actions form {
-        display: flex;
-        align-items: flex-end;
-        margin-bottom: 10px; 
-    }
-
-    .quick-actions .form-group {
-        margin-bottom: 0;
-    }
-
-    .quick-actions .btn {
-        margin-bottom: 0;
-        margin-left: 5px; 
-    }
-     
-@media (max-width: 768px) {
-    .quick-actions .btn {
-        width: 100%;  
-    }
-}
- 
-.hr-actions {
-    display: flex;
-}
-
-    .hr-actions form {
-        margin-bottom: 10px;  
+    .quick-actions .btn,
+    .hr-actions .btn {
+        width: 100%;
     }
 
     .hr-actions .btn {
-        margin-bottom: 0;
-        margin-right: 10px; 
-    }
-     
-@media (max-width: 768px) {
-    .hr-actions .btn {
-        width: 100%; 
         margin-right: 0;
-        margin-bottom: 5px;  
+        margin-bottom: 5px;
     }
 }
