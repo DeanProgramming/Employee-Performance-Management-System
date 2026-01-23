@@ -231,6 +231,19 @@ label {
     height: 340px;
 }
 
+.chart-wrap {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto; 
+}
+
+.manager-dashboard .card {
+    height: 100%;
+}
+
+.chart-wrap canvas {
+    display: block;
+}
 
 @media (min-width: 768px) {
     html {
