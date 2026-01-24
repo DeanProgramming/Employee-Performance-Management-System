@@ -10,15 +10,12 @@
 <h1>@ViewData["Title"]</h1>
 
 
-@if (Model.Admin)
+@if (Model.Admin && Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
 {
     <form method="post">
         <button type="submit" asp-page-handler="GoBackToMenu" class="btn btn-primary">Go Back</button>
-    </form>
-}
+    </form> 
 
-@if (Model.Admin && Model.CreatingNewReport == false && Model.UpdatePerformanceReview == false)
-{ 
     <form method="post" asp-page-handler="Search">
         <div class="form-group">
             <label for="searchTerm">Search Name or Position</label>

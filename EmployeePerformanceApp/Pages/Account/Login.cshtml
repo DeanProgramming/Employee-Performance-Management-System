@@ -2,37 +2,52 @@
 @model EmployeePerformanceApp.Pages.Account.LoginModel
 @{
     ViewData["Title"] = "Login";
-} 
-
-<h1>Login</h1>
-
-<form method="post">
-    <div class="form-group">
-        <label asp-for="Username"></label>
-        <input asp-for="Username" class="form-control" />
-        <span asp-validation-for="Username" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="Password"></label>
-        <input asp-for="Password" class="form-control" type="password" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
-
-@if (Model.ErrorMessage != null)
-{
-    <div class="alert alert-danger">@Model.ErrorMessage</div>
 }
 
-<br />
-<br />
-<h3>Some Precreated Accounts</h3>
-<br />
-<h4>UserName - John.Doe (Manager)</h4> 
-<h4>UserName - Jane.Smith (Employee)</h4> 
-<h4>UserName - Liam.Walker (HR)</h4> 
+<div class="container" style="max-width: 520px; margin: 0 auto; padding: 2.5rem 1rem;">
+    <div class="card" style="border: 0; border-radius: 14px; box-shadow: 0 10px 24px rgba(0,0,0,0.06);">
+        <div class="card-header" style="background: white; border-bottom: 1px solid rgba(0,0,0,0.06); padding: 1rem 1.25rem;">
+            <h1 style="margin: 0; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em;">Login</h1>
+            <p style="margin: 0.25rem 0 0; color: rgba(0,0,0,0.6);">
+                Sign in to access your dashboard.
+            </p>
+        </div>
 
-<br />
-<h4>Password - YourSecurePassword123!</h4> 
+        <div class="card-body" style="padding: 1.25rem;">
+            @if (Model.ErrorMessage != null)
+            {
+                <div class="alert alert-danger">@Model.ErrorMessage</div>
+            }
 
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Username"></label>
+                    <input asp-for="Username" class="form-control" autocomplete="username" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" type="password" autocomplete="current-password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    Login
+                </button>
+            </form>
+
+            <hr style="margin: 1.25rem 0; opacity: 0.15;" />
+
+            <h3 style="font-size: 1.05rem; margin-bottom: 0.75rem;">Some Precreated Accounts</h3>
+
+            <div style="line-height: 1.6;">
+                <div><strong>Username</strong> - John.Doe <span style="color: rgba(0,0,0,0.6);">(Manager)</span></div>
+                <div><strong>Username</strong> - Jane.Smith <span style="color: rgba(0,0,0,0.6);">(Employee)</span></div>
+                <div><strong>Username</strong> - Liam.Walker <span style="color: rgba(0,0,0,0.6);">(HR)</span></div>
+
+                <div style="margin-top: 0.75rem;"><strong>Password</strong> - YourSecurePassword123!</div>
+            </div>
+        </div>
+    </div>
+</div>
